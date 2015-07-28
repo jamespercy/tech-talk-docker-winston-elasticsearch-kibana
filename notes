@@ -18,3 +18,5 @@ sudo /etc/init.d/kibana4 start
 sudo /etc/init.d/elasticsearch start
 
 192.168.132.128
+
+dkill

@@ -1,0 +1,27 @@
+stuart:
+    image: jamespercy/greeter:v1
+    ports:
+        - "3000:3000"
+    environment:
+        - GREETER_NAME=Stuart the Minion
+    volumes:
+        - /var/log/greeter:/app/logs
+
+bob:
+    image: jamespercy/greeter:v1
+    ports:
+        - "3001:3000"
+    environment:
+        - GREETER_NAME=Bob the Minion
+    volumes:
+        - /var/log/greeter:/app/logs
+
+kevin:
+    image: jamespercy/greeter:v1
+    ports:
+        - "3002:3000"
+    environment:
+        - GREETER_NAME=Kevin the Minion
+    volumes:
+        - /var/log/greeter:/app/logs
+

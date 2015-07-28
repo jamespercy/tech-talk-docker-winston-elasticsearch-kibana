@@ -13,7 +13,7 @@ app.get('/', function(req, res) {
 	var count = (req.headers['count']) ? + req.headers['count'] + 1 : 1;
 
 	function assignId(requestId) {
-			console.log('checking id ' + requestId);
+		console.log('checking id ' + requestId);
 		return (requestId === undefined) ? '' + new Date().getTime() : requestId;
 	}
 
