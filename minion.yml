@@ -1,0 +1,6 @@
+minion:
+    image: jamespercy/greeter:v1
+    volumes:
+        - /var/log/greeter:/app/logs
+    links:
+        kibana
