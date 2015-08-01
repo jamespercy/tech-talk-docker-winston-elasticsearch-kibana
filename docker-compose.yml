@@ -1,27 +1,34 @@
 stuart:
-    image: jamespercy/greeter:v1
+    extends:
+        file: ./minion.yml
+        service: minion
     ports:
         - "3000:3000"
     environment:
         - GREETER_NAME=Stuart the Minion
-    volumes:
-        - /var/log/greeter:/app/logs
 
 bob:
-    image: jamespercy/greeter:v1
+    extends:
+        service: minion
     ports:
         - "3001:3000"
     environment:
         - GREETER_NAME=Bob the Minion
-    volumes:
-        - /var/log/greeter:/app/logs
 
 kevin:
-    image: jamespercy/greeter:v1
+    extends:
+        service: minion
     ports:
         - "3002:3000"
     environment:
         - GREETER_NAME=Kevin the Minion
-    volumes:
-        - /var/log/greeter:/app/logs
 
+kibana:
+    image: devdb/kibana
+    ports:
+        - "5602:5601"
+        - "9201:9200"
+    exports: 
+        - "9200"
+    volumes:
+        - "/tmp/kibana:/opt/elasticsearch/data"
