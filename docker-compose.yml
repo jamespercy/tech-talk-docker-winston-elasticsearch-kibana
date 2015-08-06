@@ -1,34 +1,56 @@
-stuart:
-    extends:
-        file: ./minion.yml
-        service: minion
+---
+haproxy:
+    image: tutum/haproxy
     ports:
-        - "3000:3000"
-    environment:
-        - GREETER_NAME=Stuart the Minion
+        - "10000:80"
+    links:
+        - bob
+        - stuart
+        - kevin
 
 bob:
     extends:
+        file: minion.yml
         service: minion
     ports:
-        - "3001:3000"
+         - "3001:3000"
     environment:
-        - GREETER_NAME=Bob the Minion
+         - GREETER_NAME=Bob the Minion
+         - LB_HOST=10.0.2.15
+         - LB_PORT=10000
+    links:
+         - kibana
+
+stuart:
+    extends:
+        file: minion.yml
+        service: minion
+    ports:
+         - "3000:3000"
+    environment:
+         - GREETER_NAME=Stuart the Minion
+         - LB_HOST=10.0.2.15
+         - LB_PORT=10000
+    links:
+         - kibana
 
 kevin:
     extends:
+        file: minion.yml
         service: minion
     ports:
-        - "3002:3000"
+         - "3002:3000"
     environment:
-        - GREETER_NAME=Kevin the Minion
+         - GREETER_NAME=Kevin the Minion
+         - LB_HOST=10.0.2.15
+         - LB_PORT=10000
+    links:
+         - kibana
 
 kibana:
     image: devdb/kibana
     ports:
-        - "5602:5601"
-        - "9201:9200"
-    exports: 
-        - "9200"
+        - "5601:5601"
+        - "9200:9200"
     volumes:
         - "/tmp/kibana:/opt/elasticsearch/data"

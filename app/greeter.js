@@ -11,6 +11,7 @@ app.get('/', function(req, res) {
 	var id = assignId(req.headers['correlation-id']);
 	var caller = (req.headers['caller']) ? req.headers['caller'] : 'a stranger';
 	var count = (req.headers['count']) ? + req.headers['count'] + 1 : 1;
+	var internalCount = 0;
 
 	function assignId(requestId) {
 		console.log('checking id ' + requestId);
@@ -23,24 +24,27 @@ app.get('/', function(req, res) {
 			return;
 		}
 	}
-	function requestAGreeting(count, props, id) {
-		log.info(props.name + ' is calling a new friend', {id : id, count: count, name: props.name});
+	var generateMeta = function() {
+		internalCount++;
+		return {id : id, count: count, internalCount: internalCount, name: props.name};
+	}
+	function requestAGreeting() {
+		log.info(props.name + ' is calling a new friend', generateMeta());
 		var options = {url: 'http://' + props.host + ':' + props.port,
 					   headers : {'correlation-id' : id, 'caller' : props.name, 'count' : count}};
 		request(options, handleResponse);
 	}
 
-
 	res.send('hi, my name is ' + props.name + ', I\'m going to greet someone else now');
 
-	log.info(caller + ' said hi to ' + props.name, {id : id, name: props.name});
+	log.info(caller + ' said hi to ' + props.name, generateMeta());
 	
 		//pass it on
 
 	if (count <= props.maxCalls) {
-		requestAGreeting(count, props, id);
+		requestAGreeting();
 	} else {
-		log.info(props.name + ' says this has gone far enough! ', {id : id, count: count, name: props.name});
+		log.info(props.name + ' says this has gone far enough! ', generateMeta());
 	}
 
 });
