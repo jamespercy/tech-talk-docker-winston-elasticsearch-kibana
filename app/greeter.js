@@ -25,9 +25,11 @@ app.get('/', function(req, res) {
 		}
 	}
 	var generateMeta = function() {
+		//generates meta data for logging
 		internalCount++;
 		return {id : id, count: count, internalCount: internalCount, name: props.name};
 	}
+
 	function requestAGreeting() {
 		log.info(props.name + ' is calling a new friend', generateMeta());
 		var options = {url: 'http://' + props.host + ':' + props.port,
@@ -40,10 +42,9 @@ app.get('/', function(req, res) {
 	log.info(caller + ' said hi to ' + props.name, generateMeta());
 	
 		//pass it on
-
 	if (count <= props.maxCalls) {
 		requestAGreeting();
-	} else {
+	} else { //this has gone too far
 		log.info(props.name + ' says this has gone far enough! ', generateMeta());
 	}
 
