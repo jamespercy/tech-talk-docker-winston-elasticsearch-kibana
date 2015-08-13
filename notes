@@ -2,10 +2,8 @@ docker build -t jamespercy/greeter:v1 app
 docker run -d -t -p 3000:3000 -v /var/log/greeter:/app/logs jamespercy/greeter:v1
 docker run -d -t --name=james -p 3000:3000 -v /var/log/greeter:/app/logs jamespercy/greeter:v1
 
-184.106.242.193
-
-sudo /etc/init.d/kibana4 start
-sudo /etc/init.d/elasticsearch start
+Delete all untagged images
+docker rmi $(docker images -q --filter "dangling=true")
 
 
 dkill

@@ -22,7 +22,7 @@ request('http://' + props.elasticHost+ ':' + props.elasticPort,
 			if (err || response.statusCode != 200) {
 				log.warn('could not access elastcsearch at ' + props.elasticHost+ ':' + props.elasticPort);
 			} else 
-			log.warn('logging to elastcsearch at ' + props.elasticHost+ ':' + props.elasticPort);
+			log.info('logging to elastcsearch at ' + props.elasticHost+ ':' + props.elasticPort);
 		});
 
 
